@@ -34,24 +34,27 @@ class TradingCardContainer extends React.Component {
   constructor() {
     super();
 
-    this.state = { cards:[] };
+    this.state = { 
+      cards:[],
+      numberOfCards: 0,
+      mia: false,
+      hackbright: 'awesome' 
+    };
+
     this.updateCards = this.updateCards.bind(this);
   }
 
-  updateCards() {
-    const floatCard = {
-      name: 'Float',
-      skill: 'baking pretzels',
-      imgUrl: '/static/img/float.jpg'
-    };
+  updateCards(response) {
+    const cards = response.cards;
+    this.setState({ cards:cards });
+  }
 
-    this.setState({
-      cards:[ floatCard ]
-    });
+  getCardData() {
+    $.get('/cards.json', this.updateCards)
   }
 
   componentDidMount() {
-    this.updateCards();
+    this.getCardData();
   }
 
   render() {
